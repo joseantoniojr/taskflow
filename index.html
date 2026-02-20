@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow</title>
+    <!-- METATAGS -->
+    <meta name="description" content="Sistema de gerenciamento de tarefas e projetos">
+    <meta name="author" content="José Júnior">
+    <!-- FONT INTER -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <!-- ICONS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/pages.css">
+    <link rel="stylesheet" href="css/utilities.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header__left">
+                <button class="header__hamburger" id="btnHamburger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="menuNav">
+                    <i data-lucide="menu"></i>
+                </button>
+
+                <a href="#" class="header__logo" aria-label="TaskFlow - Ir para o Dashboard" data-page="dashboard">
+                    <div class="header__logo-icon">
+                        <i data-lucide="circle-check-big" aria-hidden="true"></i>
+                    </div>
+                    <span class="header__logo-text">
+                        Task<strong>Flow</strong>
+                    </span>
+                </a>
+            </div>
+
+            <div class="header__search">
+                <label for="globalSearch" class="sr-only">Buscar tarefas e projetos</label>
+                <i data-lucide="search" class="header__search-icon" aria-hidden="true"></i>
+                <input type="search" id="globalSearch" class="form-input" placeholder="Buscar tarefas e projetos..." autocomplete="off">
+            </div>
+
+            <div class="header__right">
+                <button class="header__search-toggle" id="searchToggle" aria-label="Abrir busca" aria-expanded="false">
+                    <i data-lucide="search"></i>
+                </button>
+
+                <button class="header__action-btn" id="toggleTheme" aria-label="Alternar tema claro e escuro" title="Alternar tema">
+                    <i data-lucide="sun" class="icon-light" aria-hidden="true"></i>
+                    <i data-lucide="moon" class="icon-dark" aria-hidden="true"></i>
+                </button>
+
+                <div class="header__user">
+                    <div class="header__avatar" aria-hidden="true">J</div>
+                    <span class="header__username">João Silva</span>
+                </div>
+            </div>
+
+            <div class="header__search-overlay" id="searchOverlay" hidden>
+                <button class="header__search-back" id="searchBack" aria-label="Fechar busca">
+                    <i data-lucide="arrow-left"></i>
+                </button>
+                <label for="mobileSearch" class="sr-only">Buscar tarefas e projetos</label>
+                <input type="search" id="mobileSearch" class="header__search-input header__search-input--mobile" placeholder="Buscar tarefas e projetos..." autocomplete="off">
+            </div>
+        </header>
+
+        <aside class="sidebar" id="sidebar">
+            <nav class="sidebar__nav" aria-label="Navegação principal">
+                <ul class="sidebar__menu" id="menuNav">
+                    <li class="sidebar__item">
+                        <a href="#" class="sidebar__link active" data-page="dashboard">
+                            <i data-lucide="layout-dashboard"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="sidebar__item">
+                        <a href="#" class="sidebar__link" data-page="tasks">
+                            <i data-lucide="notebook-text"></i>
+                            Tarefas
+                        </a>
+                    </li>
+                    <li class="sidebar__item">
+                        <a href="#" class="sidebar__link" data-page="projects">
+                            <i data-lucide="folder-open"></i>
+                            Projetos
+                        </a>
+                    </li>
+                    <li class="sidebar__item">
+                        <a href="#" class="sidebar__link" data-page="tags">
+                            <i data-lucide="tag"></i>
+                            Tags
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="sidebar__footer">
+                <button class="btn btn--primary btn--full" id="btnNewTask">
+                    <i data-lucide="plus"></i>
+                    Nova Tarefa
+                </button>
+
+                <button class="btn btn--outline btn--full" id="btnNewProject">
+                    <i data-lucide="folder-plus"></i>
+                    Novo Projeto
+                </button>
+            </div>
+        </aside>
+
+        <main class="main" id="main">
+            <div class="container">
+                <section class="page active" id="dashboard">
+                    <div class="page__header">
+                        <h1 class="page__title">Dashboard</h1>
+                        <p class="page__subtitle">Visão geral das suas tarefas e projetos</p>
+                    </div>
+
+                    <div class="stats grid grid--4" id="statsGrid">
+                        <article class="card">
+                            <div class="card__header">
+                                <span class="card__label">Total de Tarefas</span>
+                                <span class="card__icon">
+                                    <i data-lucide="list"></i>
+                                </span>
+                            </div>
+                            <div class="card__body">
+                                <span class="card__label--emphasis">24</span>
+                            </div>
+                            <div class="card__footer">
+                                <span class="card__info">+4 desde ontem</span>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__header">
+                                <span class="card__label">Ativas</span>
+                                <span class="card__icon">
+                                    <i data-lucide="zap"></i>
+                                </span>
+                            </div>
+                            <div class="card__body">
+                                <span class="card__label--emphasis">18</span>
+                            </div>
+                            <div class="card__footer">
+                                <span class="card__info">75% da meta diária</span>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__header">
+                                <span class="card__label">Hoje</span>
+                                <span class="card__icon">
+                                    <i data-lucide="calendar"></i>
+                                </span>
+                            </div>
+                            <div class="card__body">
+                                <span class="card__label--emphasis">6</span>
+                            </div>
+                            <div class="card__footer">
+                                <span class="card__info">2 prioritárias</span>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__header">
+                                <span class="card__label">Concluídas</span>
+                                <span class="card__icon">
+                                    <i data-lucide="circle-check"></i>
+                                </span>
+                            </div>
+                            <div class="card__body">
+                                <span class="card__label--emphasis">75%</span>
+                            </div>
+                            <div class="card__footer">
+                                <div class="card__progress-bar">
+                                    <div class="card__progress-bar--fill"></div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__header">
+                                <span class="card__label--emphasis">Tarefas Atrasadas</span>
+                                <span class="card__icon">
+                                    <i data-lucide="circle-alert"></i>
+                                </span>
+                            </div>
+                            <div class="card__body">
+                                <div class="card__content-item">
+                                    <div class="card__content-header">
+                                        <span class="card__content-title">Finalizar relatório mensal</span>
+                                        <span class="card__info">2 dias atrasados</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <div class="card__header">
+                                <span class="card__label">Projetos em Destaque</span>
+                                <span class="card__icon">
+                                    <i data-lucide="folder-heart"></i>
+                                </span>
+                            </div>
+                            <div class="card__body">
+                                <div class="card__content-item">
+                                    <div class="card__content-header">
+                                        <span class="card__content-title">Redesign Website</span>
+                                        <span class="card__content-info">70%</span>
+                                    </div>
+                                    <div class="card__progress-bar">
+                                        <div class="card__progress-bar--fill"></div>
+                                    </div>
+                                </div>
+
+                                <div class="card__content-item">
+                                    <div class="card__content-header">
+                                        <span class="card__content-title">Expansão de mercado</span>
+                                        <span class="card__content-info">45%</span>
+                                    </div>
+                                    <div class="card__progress-bar">
+                                        <div class="card__progress-bar--fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="toolbar">
+                        <div class="toolbar__filters" id="taskFilters">
+                            <button class="btn btn--filter active" data-filter="all">Todas</button>
+                            <button class="btn btn--filter" data-filter="active">Ativas</button>
+                            <button class="btn btn--filter" data-filter="completed">Concluídas</button>
+                            <button class="btn btn--filter" data-filter="overdue">Atrasadas</button>
+                        </div>
+
+                        <div class="toolbar__sort">
+                            <label for="taskSort" class="label sort-label">Ordernar por:</label>
+                            <select name="sort" class="select" id="taskSort">
+                                <option value="newest">Mais recentes</option>
+                                <option value="oldest">Mais antigas</option>
+                                <option value="priority">Prioridade</option>
+                                <option value="deadline">Prazo</option>
+                                <option value="alpha">A-Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="task-list">
+                        <table class="list-table" aria-label="Lista de tarefas">
+                            <thead class="list-table__head">
+                                <tr>
+                                    <th class="list-table__th list-table__th--check" scope="col">
+                                        <label for="checkAll" class="sr-only">Todas as tarefas</label>
+                                        <input type="checkbox" name="checkAll" id="checkAll">
+                                    </th>
+                                    <th class="list-table__th list-table__th--task" scope="col">Tarefa</th>
+                                    <th class="list-table__th list-table__th--deadline" scope="col">Prazo</th>
+                                    <th class="list-table__th list-table__th--tag" scope="col">Tag</th>
+                                    <th class="list-table__th list-table__th--priority" scope="col">Prioridade</th>
+                                    <th class="list-table__th list-table__th--actions" scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="list-table__body" id="taskListTable">
+                                <tr class="list-table__row" data-id="1" data-task-id="1">
+                                    <td class="list-table__td list-table__th--check">
+                                        <label for="check-task-1" class="sr-only">Finalizar relatório Mensal</label>
+                                        <input type="checkbox" name="task" id="check-task-1">
+                                    </td>
+
+                                    <td class="list-table__td list-table__td--task">
+                                        <div class="list-table__task-cell">
+                                            <span class="list-table__task-title">Finalizar relatório mensal</span>
+                                            <button class="list-table__favotire active" data-action="favorite" aria-label="Remover dos favoritos">
+                                                <i data-lucide="star"></i>
+                                            </button>
+                                        </div>
+                                        <div class="list-table__task-cell">
+                                            <p class="list-table__task-description">Eu fiz o relatório hoje muito completo...</p>
+                                        </div>
+                                    </td>
+
+                                    <td class="list-table__td list-table__td--deadline">
+                                        <div class="list-table__deadline-cell">
+                                            <i data-lucide="calendar" aria-hidden="true"></i>
+
+                                            <time datetime="2026-03-09T14:00">09/03 - 14:00</time>
+                                        </div>
+                                    </td>
+
+                                    <td class="list-table__td list-table__td--tag">
+                                        <ul class="list-table__tags" aria-label="Tags">
+                                            <li>
+                                                <span class="tag-badge">Trabalho</span>
+                                            </li>
+                                        </ul>
+                                    </td>
+
+                                    <td class="list-table__td list-table__td--priority">
+                                        <span class="badge badge--high">Alta</span>
+                                    </td>
+
+                                    <td class="list-table__td list-table__td--actions">
+                                        <div class="list-table__actions-cell">
+                                            <button class="btn btn--icon" data-action="edit">
+                                                <i data-lucide="pencil" aria-hidden="true"></i>
+                                            </button>
+
+                                            <button class="btn btn--icon" data-action="delete">
+                                                <i data-lucide="trash-2" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="list__footer">
+                            <span class="list__footer-info">Mostrando <strong>5</strong> de <strong>12</strong> tarefas</span>
+
+                            <a href="#" class="list__footer-link" data-page="tasks">Ver todas as tarefas</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+
+    </div>
+
+
+    <!-- SCRIPTS -->
+    <script src="js/utils.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/tags.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- START ICONS -->
+    <script>lucide.createIcons();</script>
+</body>
+
+</html>
