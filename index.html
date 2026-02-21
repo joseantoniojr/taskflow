@@ -8,7 +8,7 @@
     <!-- METATAGS -->
     <meta name="description" content="Sistema de gerenciamento de tarefas e projetos">
     <meta name="author" content="José Júnior">
-    <!-- FONT INTER -->
+    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
@@ -23,318 +23,1009 @@
 </head>
 
 <body>
-    <div class="app-container">
+    <div class="app">
         <header class="header">
+
             <div class="header__left">
-                <button class="header__hamburger" id="btnHamburger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="menuNav">
-                    <i data-lucide="menu"></i>
+                <button class="header__hamburger" id="btn-hamburger" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="sidebar">
+                    <i data-lucide="menu" aria-hidden="true"></i>
                 </button>
 
-                <a href="#" class="header__logo" aria-label="TaskFlow - Ir para o Dashboard" data-page="dashboard">
-                    <div class="header__logo-icon">
-                        <i data-lucide="circle-check-big" aria-hidden="true"></i>
+                <a href="#" class="header__logo" data-page="dashboard" aria-label="TaskFlow — ir para o Dashboard">
+                    <div class="header__logo-icon" aria-hidden="true">
+                        <i data-lucide="circle-check-big"></i>
                     </div>
-                    <span class="header__logo-text">
-                        Task<strong>Flow</strong>
-                    </span>
+                    <span class="header__logo-text">Task<strong>Flow</strong></span>
                 </a>
             </div>
 
             <div class="header__search">
-                <label for="globalSearch" class="sr-only">Buscar tarefas e projetos</label>
+                <label for="input-global-search" class="sr-only">Buscar tarefas e projetos</label>
                 <i data-lucide="search" class="header__search-icon" aria-hidden="true"></i>
-                <input type="search" id="globalSearch" class="form-input" placeholder="Buscar tarefas e projetos..." autocomplete="off">
+                <input type="search" id="input-global-search" class="header__search-input" placeholder="Buscar tarefas e projetos..." autocomplete="off">
             </div>
 
             <div class="header__right">
-                <button class="header__search-toggle" id="searchToggle" aria-label="Abrir busca" aria-expanded="false">
-                    <i data-lucide="search"></i>
+                <button class="header__btn-icon" id="btn-search-open" aria-label="Abrir busca" aria-expanded="false">
+                    <i data-lucide="search" aria-hidden="true"></i>
                 </button>
 
-                <button class="header__action-btn" id="toggleTheme" aria-label="Alternar tema claro e escuro" title="Alternar tema">
-                    <i data-lucide="sun" class="icon-light" aria-hidden="true"></i>
-                    <i data-lucide="moon" class="icon-dark" aria-hidden="true"></i>
+                <button class="header__btn-icon" id="btn-toggle-theme" aria-label="Alternar tema claro e escuro" title="Alternar tema">
+                    <i data-lucide="sun" class="theme-icon--light" aria-hidden="true"></i>
+                    <i data-lucide="moon" class="theme-icon--dark" aria-hidden="true"></i>
                 </button>
 
                 <div class="header__user">
-                    <div class="header__avatar" aria-hidden="true">J</div>
-                    <span class="header__username">João Silva</span>
+                    <div class="header__avatar" aria-hidden="true">
+                        <img src="https://ui-avatars.com/api/?name=Junior+Santos&background=0000ff&color=fff&rounded=true" alt="Avatar do Junior Santos">
+                    </div>
+                    <span class="header__username">Júnior Santos</span>
                 </div>
             </div>
 
-            <div class="header__search-overlay" id="searchOverlay" hidden>
-                <button class="header__search-back" id="searchBack" aria-label="Fechar busca">
-                    <i data-lucide="arrow-left"></i>
+            <!-- Overlay de busca mobile -->
+            <div class="header__search-overlay" id="search-overlay" hidden>
+                <button class="header__btn-icon" id="btn-search-close" aria-label="Fechar busca">
+                    <i data-lucide="arrow-left" aria-hidden="true"></i>
                 </button>
-                <label for="mobileSearch" class="sr-only">Buscar tarefas e projetos</label>
-                <input type="search" id="mobileSearch" class="header__search-input header__search-input--mobile" placeholder="Buscar tarefas e projetos..." autocomplete="off">
+                <label for="input-mobile-search" class="sr-only">Buscar tarefas e projetos</label>
+                <input type="search" id="input-mobile-search" class="header__search-input header__search-input--mobile" placeholder="Buscar..." autocomplete="off">
             </div>
-        </header>
 
-        <aside class="sidebar" id="sidebar">
+        </header>
+        <!-- /header -->
+
+        <!-- Overlay para fechar sidebar no mobile -->
+        <div class="sidebar-overlay" id="sidebar-overlay" hidden></div>
+
+        <aside class="sidebar" id="sidebar" aria-label="Menu lateral">
+
             <nav class="sidebar__nav" aria-label="Navegação principal">
-                <ul class="sidebar__menu" id="menuNav">
+                <ul class="sidebar__menu" id="sidebar-menu">
+
                     <li class="sidebar__item">
                         <a href="#" class="sidebar__link active" data-page="dashboard">
-                            <i data-lucide="layout-dashboard"></i>
-                            Dashboard
+                            <i data-lucide="layout-dashboard" aria-hidden="true"></i>
+                            <span>Dashboard</span>
                         </a>
                     </li>
+
                     <li class="sidebar__item">
                         <a href="#" class="sidebar__link" data-page="tasks">
-                            <i data-lucide="notebook-text"></i>
-                            Tarefas
+                            <i data-lucide="notebook-text" aria-hidden="true"></i>
+                            <span>Tarefas</span>
                         </a>
                     </li>
+
                     <li class="sidebar__item">
                         <a href="#" class="sidebar__link" data-page="projects">
-                            <i data-lucide="folder-open"></i>
-                            Projetos
+                            <i data-lucide="folder-open" aria-hidden="true"></i>
+                            <span>Projetos</span>
                         </a>
                     </li>
+
                     <li class="sidebar__item">
                         <a href="#" class="sidebar__link" data-page="tags">
-                            <i data-lucide="tag"></i>
-                            Tags
+                            <i data-lucide="tag" aria-hidden="true"></i>
+                            <span>Tags</span>
                         </a>
                     </li>
+
                 </ul>
             </nav>
 
             <div class="sidebar__footer">
-                <button class="btn btn--primary btn--full" id="btnNewTask">
-                    <i data-lucide="plus"></i>
+                <button class="btn btn--primary btn--full" id="btn-new-task">
+                    <i data-lucide="plus" aria-hidden="true"></i>
                     Nova Tarefa
                 </button>
-
-                <button class="btn btn--outline btn--full" id="btnNewProject">
-                    <i data-lucide="folder-plus"></i>
+                <button class="btn btn--outline btn--full" id="btn-new-project">
+                    <i data-lucide="folder-plus" aria-hidden="true"></i>
                     Novo Projeto
                 </button>
             </div>
+
         </aside>
+        <!-- /sidebar -->
 
         <main class="main" id="main">
             <div class="container">
-                <section class="page active" id="dashboard">
-                    <div class="page__header">
-                        <h1 class="page__title">Dashboard</h1>
-                        <p class="page__subtitle">Visão geral das suas tarefas e projetos</p>
-                    </div>
 
-                    <div class="stats grid grid--4" id="statsGrid">
-                        <article class="card">
-                            <div class="card__header">
-                                <span class="card__label">Total de Tarefas</span>
-                                <span class="card__icon">
+                <section class="page page--active" id="page-dashboard">
+
+                    <header class="page__header">
+                        <div class="page__heading">
+                            <h1 class="page__title" id="heading-dashboard">Dashboard</h1>
+                            <p class="page__subtitle">Visão geral das suas tarefas e projetos</p>
+                        </div>
+                    </header>
+
+                    <div class="stat-grid grid grid--4" id="stat-grid">
+
+                        <article class="stat-card">
+                            <div class="stat-card__header">
+                                <h2 class="stat-card__label">Total de Tarefas</h2>
+                                <span class="stat-card__icon stat-card__icon--blue" aria-hidden="true">
                                     <i data-lucide="list"></i>
                                 </span>
                             </div>
-                            <div class="card__body">
-                                <span class="card__label--emphasis">24</span>
+                            <div class="stat-card__body">
+                                <span class="stat-card__value">24</span>
                             </div>
-                            <div class="card__footer">
-                                <span class="card__info">+4 desde ontem</span>
+                            <div class="stat-card__footer">
+                                <span class="stat-card__info">+4 desde ontem</span>
                             </div>
                         </article>
 
-                        <article class="card">
-                            <div class="card__header">
-                                <span class="card__label">Ativas</span>
-                                <span class="card__icon">
+                        <article class="stat-card">
+                            <div class="stat-card__header">
+                                <h2 class="stat-card__label">Ativas</h2>
+                                <span class="stat-card__icon stat-card__icon--yellow" aria-hidden="true">
                                     <i data-lucide="zap"></i>
                                 </span>
                             </div>
-                            <div class="card__body">
-                                <span class="card__label--emphasis">18</span>
+                            <div class="stat-card__body">
+                                <span class="stat-card__value">18</span>
                             </div>
-                            <div class="card__footer">
-                                <span class="card__info">75% da meta diária</span>
+                            <div class="stat-card__footer">
+                                <span class="stat-card__info">75% da meta diária</span>
                             </div>
                         </article>
 
-                        <article class="card">
-                            <div class="card__header">
-                                <span class="card__label">Hoje</span>
-                                <span class="card__icon">
+                        <article class="stat-card">
+                            <div class="stat-card__header">
+                                <h2 class="stat-card__label">Hoje</h2>
+                                <span class="stat-card__icon stat-card__icon--purple" aria-hidden="true">
                                     <i data-lucide="calendar"></i>
                                 </span>
                             </div>
-                            <div class="card__body">
-                                <span class="card__label--emphasis">6</span>
+                            <div class="stat-card__body">
+                                <span class="stat-card__value">6</span>
                             </div>
-                            <div class="card__footer">
-                                <span class="card__info">2 prioritárias</span>
+                            <div class="stat-card__footer">
+                                <span class="stat-card__info">2 prioritárias</span>
                             </div>
                         </article>
 
-                        <article class="card">
-                            <div class="card__header">
-                                <span class="card__label">Concluídas</span>
-                                <span class="card__icon">
+                        <article class="stat-card">
+                            <div class="stat-card__header">
+                                <h2 class="stat-card__label">Concluídas</h2>
+                                <span class="stat-card__icon stat-card__icon--green" aria-hidden="true">
                                     <i data-lucide="circle-check"></i>
                                 </span>
                             </div>
-                            <div class="card__body">
-                                <span class="card__label--emphasis">75%</span>
+                            <div class="stat-card__body">
+                                <span class="stat-card__value">75%</span>
                             </div>
-                            <div class="card__footer">
-                                <div class="card__progress-bar">
-                                    <div class="card__progress-bar--fill"></div>
+                            <div class="stat-card__footer">
+                                <div class="progress-bar" role="progressbar" aria-label="75% das tarefas concluídas">
+                                    <div class="progress-bar__fill"></div>
                                 </div>
                             </div>
                         </article>
 
-                        <article class="card">
-                            <div class="card__header">
-                                <span class="card__label--emphasis">Tarefas Atrasadas</span>
-                                <span class="card__icon">
+                        <article class="stat-card stat-card--alert">
+                            <div class="stat-card__header">
+                                <h2 class="stat-card__label">Tarefas Atrasadas</h2>
+                                <span class="stat-card__icon stat-card__icon--red" aria-hidden="true">
                                     <i data-lucide="circle-alert"></i>
                                 </span>
                             </div>
-                            <div class="card__body">
-                                <div class="card__content-item">
-                                    <div class="card__content-header">
-                                        <span class="card__content-title">Finalizar relatório mensal</span>
-                                        <span class="card__info">2 dias atrasados</span>
-                                    </div>
+                            <div class="stat-card__body">
+                                <div class="stat-card__row">
+                                    <span class="stat-card__row-title">Finalizar relatório mensal</span>
+                                    <span class="stat-card__row-info">2 dias atrasados</span>
                                 </div>
                             </div>
                         </article>
 
-                        <article class="card">
-                            <div class="card__header">
-                                <span class="card__label">Projetos em Destaque</span>
-                                <span class="card__icon">
+                        <article class="stat-card">
+                            <div class="stat-card__header">
+                                <h2 class="stat-card__label">Projetos em Destaque</h2>
+                                <span class="stat-card__icon stat-card__icon--blue" aria-hidden="true">
                                     <i data-lucide="folder-heart"></i>
                                 </span>
                             </div>
-                            <div class="card__body">
-                                <div class="card__content-item">
-                                    <div class="card__content-header">
-                                        <span class="card__content-title">Redesign Website</span>
-                                        <span class="card__content-info">70%</span>
+                            <div class="stat-card__body">
+                                <div class="stat-card__row">
+                                    <div class="stat-card__row-header">
+                                        <span class="stat-card__row-title">Redesign Website</span>
+                                        <span class="stat-card__row-info">70%</span>
                                     </div>
-                                    <div class="card__progress-bar">
-                                        <div class="card__progress-bar--fill"></div>
+                                    <div class="progress-bar" role="progressbar" aria-label="Redesign Website: 70% concluído">
+                                        <div class="progress-bar__fill" style="width: 70%;"></div>
                                     </div>
                                 </div>
-
-                                <div class="card__content-item">
-                                    <div class="card__content-header">
-                                        <span class="card__content-title">Expansão de mercado</span>
-                                        <span class="card__content-info">45%</span>
+                                <div class="stat-card__row">
+                                    <div class="stat-card__row-header">
+                                        <span class="stat-card__row-title">Expansão de Mercado</span>
+                                        <span class="stat-card__row-info">45%</span>
                                     </div>
-                                    <div class="card__progress-bar">
-                                        <div class="card__progress-bar--fill"></div>
+                                    <div class="progress-bar" role="progressbar" aria-label="Expansão de Mercado: 45% concluído">
+                                        <div class="progress-bar__fill" style="width: 45%;"></div>
                                     </div>
                                 </div>
                             </div>
                         </article>
-                    </div>
 
+                    </div>
+                    <!-- /stat-grid -->
+
+                    <!-- Toolbar -->
                     <div class="toolbar">
-                        <div class="toolbar__filters" id="taskFilters">
-                            <button class="btn btn--filter active" data-filter="all">Todas</button>
+                        <div class="toolbar__filters" id="dashboard-filters" role="group" aria-label="Filtrar tarefas">
+                            <button class="btn btn--filter btn--filter-active" data-filter="all">Todas</button>
                             <button class="btn btn--filter" data-filter="active">Ativas</button>
                             <button class="btn btn--filter" data-filter="completed">Concluídas</button>
                             <button class="btn btn--filter" data-filter="overdue">Atrasadas</button>
                         </div>
-
                         <div class="toolbar__sort">
-                            <label for="taskSort" class="label sort-label">Ordernar por:</label>
-                            <select name="sort" class="select" id="taskSort">
+                            <label for="select-dashboard-sort" class="label">Ordenar por:</label>
+                            <select id="select-dashboard-sort" class="select" name="dashboard-sort">
                                 <option value="newest">Mais recentes</option>
                                 <option value="oldest">Mais antigas</option>
                                 <option value="priority">Prioridade</option>
                                 <option value="deadline">Prazo</option>
-                                <option value="alpha">A-Z</option>
+                                <option value="alpha">A–Z</option>
                             </select>
                         </div>
                     </div>
 
-                    <div class="task-list">
-                        <table class="list-table" aria-label="Lista de tarefas">
-                            <thead class="list-table__head">
+                    <!-- Tabela de tarefas -->
+                    <div class="table-wrapper">
+                        <table class="data-table" aria-label="Tarefas recentes">
+                            <thead class="data-table__head">
                                 <tr>
-                                    <th class="list-table__th list-table__th--check" scope="col">
-                                        <label for="checkAll" class="sr-only">Todas as tarefas</label>
-                                        <input type="checkbox" name="checkAll" id="checkAll">
+                                    <th class="data-table__th data-table__th--check" scope="col">
+                                        <label for="check-dashboard-all" class="sr-only">Selecionar todas</label>
+                                        <input type="checkbox" id="check-dashboard-all" name="check-all">
                                     </th>
-                                    <th class="list-table__th list-table__th--task" scope="col">Tarefa</th>
-                                    <th class="list-table__th list-table__th--deadline" scope="col">Prazo</th>
-                                    <th class="list-table__th list-table__th--tag" scope="col">Tag</th>
-                                    <th class="list-table__th list-table__th--priority" scope="col">Prioridade</th>
-                                    <th class="list-table__th list-table__th--actions" scope="col">Ações</th>
+                                    <th class="data-table__th data-table__th--name" scope="col">Tarefa</th>
+                                    <th class="data-table__th data-table__th--deadline" scope="col">Prazo</th>
+                                    <th class="data-table__th data-table__th--tag" scope="col">Tag</th>
+                                    <th class="data-table__th data-table__th--priority" scope="col">Prioridade</th>
+                                    <th class="data-table__th data-table__th--actions" scope="col">Ações</th>
                                 </tr>
                             </thead>
-                            <tbody class="list-table__body" id="taskListTable">
-                                <tr class="list-table__row" data-id="1" data-task-id="1">
-                                    <td class="list-table__td list-table__th--check">
-                                        <label for="check-task-1" class="sr-only">Finalizar relatório Mensal</label>
-                                        <input type="checkbox" name="task" id="check-task-1">
-                                    </td>
+                            <tbody class="data-table__body" id="dashboard-task-list">
 
-                                    <td class="list-table__td list-table__td--task">
-                                        <div class="list-table__task-cell">
-                                            <span class="list-table__task-title">Finalizar relatório mensal</span>
-                                            <button class="list-table__favotire active" data-action="favorite" aria-label="Remover dos favoritos">
-                                                <i data-lucide="star"></i>
+                                <tr class="data-table__row" data-task-id="1">
+                                    <td class="data-table__td data-table__td--check">
+                                        <label for="check-dashboard-task-1" class="sr-only">Finalizar relatório mensal</label>
+                                        <input type="checkbox" id="check-dashboard-task-1" name="task">
+                                    </td>
+                                    <td class="data-table__td data-table__td--name">
+                                        <div class="data-table__name-cell">
+                                            <span class="data-table__name">Finalizar relatório mensal</span>
+                                            <button class="btn-favorite btn-favorite--active" data-action="favorite" aria-label="Remover dos favoritos">
+                                                <i data-lucide="star" aria-hidden="true"></i>
                                             </button>
                                         </div>
-                                        <div class="list-table__task-cell">
-                                            <p class="list-table__task-description">Eu fiz o relatório hoje muito completo...</p>
-                                        </div>
+                                        <p class="data-table__description">Relatório completo do mês de março...</p>
                                     </td>
-
-                                    <td class="list-table__td list-table__td--deadline">
-                                        <div class="list-table__deadline-cell">
+                                    <td class="data-table__td data-table__td--deadline">
+                                        <div class="data-table__deadline-cell">
                                             <i data-lucide="calendar" aria-hidden="true"></i>
-
-                                            <time datetime="2026-03-09T14:00">09/03 - 14:00</time>
+                                            <time datetime="2026-03-09T14:00">09/03 — 14:00</time>
                                         </div>
                                     </td>
-
-                                    <td class="list-table__td list-table__td--tag">
-                                        <ul class="list-table__tags" aria-label="Tags">
-                                            <li>
-                                                <span class="tag-badge">Trabalho</span>
-                                            </li>
+                                    <td class="data-table__td data-table__td--tag">
+                                        <ul class="tag-list" aria-label="Tags da tarefa">
+                                            <li><span class="tag-badge">Trabalho</span></li>
                                         </ul>
                                     </td>
-
-                                    <td class="list-table__td list-table__td--priority">
+                                    <td class="data-table__td data-table__td--priority">
                                         <span class="badge badge--high">Alta</span>
                                     </td>
-
-                                    <td class="list-table__td list-table__td--actions">
-                                        <div class="list-table__actions-cell">
-                                            <button class="btn btn--icon" data-action="edit">
+                                    <td class="data-table__td data-table__td--actions">
+                                        <div class="data-table__actions">
+                                            <button class="btn btn--icon" data-action="edit" aria-label="Editar: Finalizar relatório mensal">
                                                 <i data-lucide="pencil" aria-hidden="true"></i>
                                             </button>
-
-                                            <button class="btn btn--icon" data-action="delete">
+                                            <button class="btn btn--icon btn--icon-danger" data-action="delete" aria-label="Excluir: Finalizar relatório mensal">
                                                 <i data-lucide="trash-2" aria-hidden="true"></i>
                                             </button>
                                         </div>
                                     </td>
                                 </tr>
+
                             </tbody>
                         </table>
 
-                        <div class="list__footer">
-                            <span class="list__footer-info">Mostrando <strong>5</strong> de <strong>12</strong> tarefas</span>
-
-                            <a href="#" class="list__footer-link" data-page="tasks">Ver todas as tarefas</a>
+                        <div class="table-footer">
+                            <span class="table-footer__info">
+                                Mostrando <strong>5</strong> de <strong>12</strong> tarefas
+                            </span>
+                            <a href="#" class="table-footer__link" data-page="tasks">Ver todas as tarefas</a>
                         </div>
                     </div>
+
                 </section>
+                <!-- /page-dashboard -->
+
+                <section class="page" id="page-tasks">
+
+                    <header class="page__header">
+                        <div class="page__heading">
+                            <h1 class="page__title" id="heading-tasks">Minhas Tarefas</h1>
+                            <p class="page__subtitle">Gerencie suas atividades e prazos</p>
+                        </div>
+                        <button class="btn btn--primary" id="btn-new-task-page">
+                            <i data-lucide="plus" aria-hidden="true"></i>
+                            Nova Tarefa
+                        </button>
+                    </header>
+
+                    <div class="toolbar">
+                        <div class="toolbar__filters" id="task-filters" role="group" aria-label="Filtrar tarefas">
+                            <button class="btn btn--filter btn--filter-active" data-filter="all">Todas</button>
+                            <button class="btn btn--filter" data-filter="active">Ativas</button>
+                            <button class="btn btn--filter" data-filter="completed">Concluídas</button>
+                            <button class="btn btn--filter" data-filter="overdue">Atrasadas</button>
+                        </div>
+                        <div class="toolbar__sort">
+                            <label for="select-task-sort" class="label">Ordenar por:</label>
+                            <select id="select-task-sort" class="select" name="task-sort">
+                                <option value="newest">Mais recentes</option>
+                                <option value="oldest">Mais antigas</option>
+                                <option value="priority">Prioridade</option>
+                                <option value="deadline">Prazo</option>
+                                <option value="alpha">A–Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-wrapper">
+                        <table class="data-table" aria-label="Lista de tarefas">
+                            <thead class="data-table__head">
+                                <tr>
+                                    <th class="data-table__th data-table__th--check" scope="col">
+                                        <label for="check-tasks-all" class="sr-only">Selecionar todas</label>
+                                        <input type="checkbox" id="check-tasks-all" name="check-all">
+                                    </th>
+                                    <th class="data-table__th data-table__th--name" scope="col">Tarefa</th>
+                                    <th class="data-table__th data-table__th--deadline" scope="col">Prazo</th>
+                                    <th class="data-table__th data-table__th--tag" scope="col">Tag</th>
+                                    <th class="data-table__th data-table__th--priority" scope="col">Prioridade</th>
+                                    <th class="data-table__th data-table__th--actions" scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="data-table__body" id="task-list">
+
+                                <tr class="data-table__row" data-task-id="1">
+                                    <td class="data-table__td data-table__td--check">
+                                        <label for="check-task-1" class="sr-only">Finalizar relatório mensal</label>
+                                        <input type="checkbox" id="check-task-1" name="task">
+                                    </td>
+                                    <td class="data-table__td data-table__td--name">
+                                        <div class="data-table__name-cell">
+                                            <span class="data-table__name">Finalizar relatório mensal</span>
+                                            <button class="btn-favorite btn-favorite--active" data-action="favorite" aria-label="Remover dos favoritos">
+                                                <i data-lucide="star" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <p class="data-table__description">Relatório completo do mês de março...</p>
+                                    </td>
+                                    <td class="data-table__td data-table__td--deadline">
+                                        <div class="data-table__deadline-cell">
+                                            <i data-lucide="calendar" aria-hidden="true"></i>
+                                            <time datetime="2026-03-09T14:00">09/03 — 14:00</time>
+                                        </div>
+                                    </td>
+                                    <td class="data-table__td data-table__td--tag">
+                                        <ul class="tag-list" aria-label="Tags da tarefa">
+                                            <li><span class="tag-badge">Trabalho</span></li>
+                                        </ul>
+                                    </td>
+                                    <td class="data-table__td data-table__td--priority">
+                                        <span class="badge badge--high">Alta</span>
+                                    </td>
+                                    <td class="data-table__td data-table__td--actions">
+                                        <div class="data-table__actions">
+                                            <button class="btn btn--icon" data-action="edit" aria-label="Editar: Finalizar relatório mensal">
+                                                <i data-lucide="pencil" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn btn--icon btn--icon-danger" data-action="delete" aria-label="Excluir: Finalizar relatório mensal">
+                                                <i data-lucide="trash-2" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+
+                        <div class="table-footer">
+                            <span class="table-footer__info">
+                                Mostrando <strong>5</strong> de <strong>12</strong> tarefas
+                            </span>
+                        </div>
+                    </div>
+
+                </section>
+                <!-- /page-tasks -->
+
+                <section class="page" id="page-projects">
+
+                    <header class="page__header">
+                        <div class="page__heading">
+                            <h1 class="page__title" id="heading-projects">Projetos</h1>
+                            <p class="page__subtitle">Gerencie seus projetos e acompanhe o progresso</p>
+                        </div>
+                        <button class="btn btn--primary" id="btn-new-project-page">
+                            <i data-lucide="folder-plus" aria-hidden="true"></i>
+                            Novo Projeto
+                        </button>
+                    </header>
+
+                    <!-- Cards de destaque -->
+                    <div class="project-grid grid grid--3" id="project-grid">
+
+                        <article class="project-card">
+                            <div class="project-card__header">
+                                <span class="badge badge--in-progress">Em Andamento</span>
+                                <div class="dropdown">
+                                    <button class="btn btn--icon" popovertarget="project-1" popovertargetaction="toggle" aria-label="Opções do projeto Redesign Website">
+                                        <i data-lucide="ellipsis" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown__menu" id="project-1" role="menu" popover="auto">
+                                        <button class="dropdown__item" data-action="edit">
+                                            <i data-lucide="pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                        <button class="dropdown__item dropdown__item--danger" data-action="delete">
+                                            <i data-lucide="trash-2" aria-hidden="true"></i> Excluir
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card__body">
+                                <h2 class="project-card__title">Redesign Website</h2>
+                                <div class="project-card__progress">
+                                    <div class="project-card__progress-info">
+                                        <span class="project-card__progress-label">Progresso</span>
+                                        <span class="project-card__progress-value">70%</span>
+                                    </div>
+                                    <div class="progress-bar" role="progressbar" aria-label="70% concluído">
+                                        <div class="progress-bar__fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card__footer">
+                                <i data-lucide="calendar" aria-hidden="true"></i>
+                                <time datetime="2026-10-20">20/OUT/2026</time>
+                            </div>
+                        </article>
+
+                        <article class="project-card">
+                            <div class="project-card__header">
+                                <span class="badge badge--planning">Planejamento</span>
+                                <div class="dropdown">
+                                    <button class="btn btn--icon" popovertarget="project-2" popovertargetaction="toggle" aria-label="Opções do projeto Lançamento de Produto">
+                                        <i data-lucide="ellipsis" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown__menu" id="project-2" role="menu" popover="auto">
+                                        <button class="dropdown__item" data-action="edit">
+                                            <i data-lucide="pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                        <button class="dropdown__item dropdown__item--danger" data-action="delete">
+                                            <i data-lucide="trash-2" aria-hidden="true"></i> Excluir
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card__body">
+                                <h2 class="project-card__title">Lançamento de Produto</h2>
+                                <div class="project-card__progress">
+                                    <div class="project-card__progress-info">
+                                        <span class="project-card__progress-label">Progresso</span>
+                                        <span class="project-card__progress-value">25%</span>
+                                    </div>
+                                    <div class="progress-bar" role="progressbar" aria-label="25% concluído">
+                                        <div class="progress-bar__fill" style="width: 25%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card__footer">
+                                <i data-lucide="calendar" aria-hidden="true"></i>
+                                <time datetime="2026-11-09">09/NOV/2026</time>
+                            </div>
+                        </article>
+
+                        <article class="project-card">
+                            <div class="project-card__header">
+                                <span class="badge badge--completed">Concluído</span>
+                                <div class="dropdown">
+                                    <button class="btn btn--icon" popovertarget="project-3" popovertargetaction="toggle" aria-label="Opções do projeto Expansão de Mercado">
+                                        <i data-lucide="ellipsis" aria-hidden="true"></i>
+                                    </button>
+                                    <div class="dropdown__menu" id="project-3" role="menu" popover="auto">
+                                        <button class="dropdown__item" data-action="edit">
+                                            <i data-lucide="pencil" aria-hidden="true"></i> Editar
+                                        </button>
+                                        <button class="dropdown__item dropdown__item--danger" data-action="delete">
+                                            <i data-lucide="trash-2" aria-hidden="true"></i> Excluir
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card__body">
+                                <h2 class="project-card__title">Expansão de Mercado</h2>
+                                <div class="project-card__progress">
+                                    <div class="project-card__progress-info">
+                                        <span class="project-card__progress-label">Progresso</span>
+                                        <span class="project-card__progress-value">100%</span>
+                                    </div>
+                                    <div class="progress-bar" role="progressbar" aria-label="100% concluído">
+                                        <div class="progress-bar__fill"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-card__footer">
+                                <i data-lucide="calendar" aria-hidden="true"></i>
+                                <time datetime="2026-10-01">01/OUT/2026</time>
+                            </div>
+                        </article>
+
+                    </div>
+                    <!-- /project-grid -->
+
+                    <!-- Toolbar -->
+                    <div class="toolbar">
+                        <div class="toolbar__filters" id="project-filters" role="group" aria-label="Filtrar projetos">
+                            <button class="btn btn--filter btn--filter-active" data-filter="all">Todos</button>
+                            <button class="btn btn--filter" data-filter="active">Ativos</button>
+                            <button class="btn btn--filter" data-filter="completed">Concluídos</button>
+                            <button class="btn btn--filter" data-filter="paused">Pausados</button>
+                        </div>
+                        <div class="toolbar__sort">
+                            <label for="select-project-sort" class="label">Ordenar por:</label>
+                            <select id="select-project-sort" class="select" name="project-sort">
+                                <option value="newest">Mais recentes</option>
+                                <option value="oldest">Mais antigas</option>
+                                <option value="progress">Progresso</option>
+                                <option value="deadline">Prazo</option>
+                                <option value="alpha">A–Z</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de projetos -->
+                    <div class="table-wrapper">
+                        <table class="data-table" aria-label="Lista de projetos">
+                            <thead class="data-table__head">
+                                <tr>
+                                    <th class="data-table__th data-table__th--check" scope="col">
+                                        <label for="check-projects-all" class="sr-only">Selecionar todos</label>
+                                        <input type="checkbox" id="check-projects-all" name="check-all">
+                                    </th>
+                                    <th class="data-table__th data-table__th--name" scope="col">Projeto</th>
+                                    <th class="data-table__th data-table__th--deadline" scope="col">Prazo</th>
+                                    <th class="data-table__th data-table__th--status" scope="col">Status</th>
+                                    <th class="data-table__th data-table__th--priority" scope="col">Prioridade</th>
+                                    <th class="data-table__th data-table__th--actions" scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="data-table__body" id="project-list">
+
+                                <tr class="data-table__row" data-project-id="1">
+                                    <td class="data-table__td data-table__td--check">
+                                        <label for="check-project-1" class="sr-only">Website UI</label>
+                                        <input type="checkbox" id="check-project-1" name="project">
+                                    </td>
+                                    <td class="data-table__td data-table__td--name">
+                                        <div class="data-table__name-cell">
+                                            <span class="data-table__name">Website UI</span>
+                                            <button class="btn-favorite btn-favorite--active" data-action="favorite" aria-label="Remover dos favoritos">
+                                                <i data-lucide="star" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        <p class="data-table__description">Redesign completo da interface web...</p>
+                                    </td>
+                                    <td class="data-table__td data-table__td--deadline">
+                                        <div class="data-table__deadline-cell">
+                                            <i data-lucide="calendar" aria-hidden="true"></i>
+                                            <time datetime="2026-03-09">09/03/2026</time>
+                                        </div>
+                                    </td>
+                                    <td class="data-table__td data-table__td--status">
+                                        <span class="badge badge--in-progress">Em Andamento</span>
+                                    </td>
+                                    <td class="data-table__td data-table__td--priority">
+                                        <span class="badge badge--high">Alta</span>
+                                    </td>
+                                    <td class="data-table__td data-table__td--actions">
+                                        <div class="data-table__actions">
+                                            <button class="btn btn--icon" data-action="edit" aria-label="Editar: Website UI">
+                                                <i data-lucide="pencil" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn btn--icon btn--icon-danger" data-action="delete" aria-label="Excluir: Website UI">
+                                                <i data-lucide="trash-2" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+                <!-- /page-projects -->
+
+                <section class="page" id="page-tags">
+
+                    <header class="page__header">
+                        <div class="page__heading">
+                            <h1 class="page__title" id="heading-tags">Gerenciar Tags</h1>
+                            <p class="page__subtitle">Crie e organize suas categorias</p>
+                        </div>
+                        <button class="btn btn--primary" id="btn-new-tag">
+                            <i data-lucide="plus" aria-hidden="true"></i>
+                            Nova Tag
+                        </button>
+                    </header>
+
+                    <!-- Cards resumo das tags -->
+                    <div class="tag-grid grid grid--4" id="tag-grid">
+
+                        <article class="tag-card">
+                            <div class="tag-card__header">
+                                <h2 class="tag-card__name">Trabalho</h2>
+                                <span class="tag-card__icon" aria-hidden="true">
+                                    <i data-lucide="briefcase"></i>
+                                </span>
+                            </div>
+                            <div class="tag-card__body">
+                                <span class="tag-card__count">24 tarefas</span>
+                            </div>
+                        </article>
+
+                        <article class="tag-card">
+                            <div class="tag-card__header">
+                                <h2 class="tag-card__name">Pessoal</h2>
+                                <span class="tag-card__icon" aria-hidden="true">
+                                    <i data-lucide="user"></i>
+                                </span>
+                            </div>
+                            <div class="tag-card__body">
+                                <span class="tag-card__count">2 tarefas</span>
+                            </div>
+                        </article>
+
+                        <article class="tag-card">
+                            <div class="tag-card__header">
+                                <h2 class="tag-card__name">Saúde</h2>
+                                <span class="tag-card__icon" aria-hidden="true">
+                                    <i data-lucide="heart-pulse"></i>
+                                </span>
+                            </div>
+                            <div class="tag-card__body">
+                                <span class="tag-card__count">12 tarefas</span>
+                            </div>
+                        </article>
+
+                        <article class="tag-card">
+                            <div class="tag-card__header">
+                                <h2 class="tag-card__name">Estudos</h2>
+                                <span class="tag-card__icon" aria-hidden="true">
+                                    <i data-lucide="graduation-cap"></i>
+                                </span>
+                            </div>
+                            <div class="tag-card__body">
+                                <span class="tag-card__count">10 tarefas</span>
+                            </div>
+                        </article>
+
+                    </div>
+                    <!-- /tag-grid -->
+
+                    <!-- Tabela de tags -->
+                    <div class="table-wrapper">
+                        <table class="data-table" aria-label="Lista de tags">
+                            <thead class="data-table__head">
+                                <tr>
+                                    <th class="data-table__th data-table__th--name" scope="col">Nome</th>
+                                    <th class="data-table__th data-table__th--color" scope="col">Cor</th>
+                                    <th class="data-table__th data-table__th--count" scope="col">Tarefas Ativas</th>
+                                    <th class="data-table__th data-table__th--usage" scope="col">Uso Total</th>
+                                    <th class="data-table__th data-table__th--actions" scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody class="data-table__body" id="tag-list">
+
+                                <tr class="data-table__row" data-tag-id="1">
+                                    <td class="data-table__td data-table__td--name">
+                                        <span class="data-table__name">Trabalho</span>
+                                    </td>
+                                    <td class="data-table__td data-table__td--color">
+                                        <div class="color-cell">
+                                            <span class="color-cell__dot" aria-hidden="true"></span>
+                                            <span class="color-cell__value">#3B82F6</span>
+                                        </div>
+                                    </td>
+                                    <td class="data-table__td data-table__td--count">
+                                        <span>15</span>
+                                    </td>
+                                    <td class="data-table__td data-table__td--usage">
+                                        <div class="progress-bar" role="progressbar" aria-label="62% de uso total">
+                                            <div class="progress-bar__fill"></div>
+                                        </div>
+                                    </td>
+                                    <td class="data-table__td data-table__td--actions">
+                                        <div class="data-table__actions">
+                                            <button class="btn btn--icon" data-action="edit" aria-label="Editar tag: Trabalho">
+                                                <i data-lucide="pencil" aria-hidden="true"></i>
+                                            </button>
+                                            <button class="btn btn--icon btn--icon-danger" data-action="delete" aria-label="Excluir tag: Trabalho">
+                                                <i data-lucide="trash-2" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                </section>
+                <!-- /page-tags -->
             </div>
         </main>
+        <!-- /main -->
 
+        <!-- ── Modal: Nova / Editar Tarefa ── -->
+        <dialog class="modal" id="modal-task">
+            <div class="modal__container">
+
+                <header class="modal__header">
+                    <h2 class="modal__title" id="modal-task-heading">Nova Tarefa</h2>
+                    <button class="modal__close" id="modal-task-close" aria-label="Fechar">
+                        <i data-lucide="x" aria-hidden="true"></i>
+                    </button>
+                </header>
+
+                <div class="modal__body">
+                    <form class="form" id="form-task" novalidate>
+
+                        <!-- ID oculto — preenchido pelo JS ao editar -->
+                        <input type="hidden" id="input-task-id" name="task-id">
+
+                        <div class="form__group">
+                            <label class="form__label" for="input-task-title">
+                                Título <span class="form__required" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" id="input-task-title" name="title" class="form__input" placeholder="Ex: Finalizar relatório trimestral" required minlength="3">
+                            <span class="form__error" id="error-task-title"></span>
+                        </div>
+
+                        <div class="form__group">
+                            <label class="form__label" for="input-task-description">Descrição</label>
+                            <textarea id="input-task-description" name="description" class="form__textarea" rows="3" placeholder="Adicione detalhes sobre a tarefa..."></textarea>
+                        </div>
+
+                        <div class="form__row">
+                            <div class="form__group">
+                                <label class="form__label" for="input-task-deadline">
+                                    <i data-lucide="calendar" aria-hidden="true"></i> Prazo
+                                </label>
+                                <input type="date" id="input-task-deadline" name="deadline" class="form__input">
+                                <span class="form__error" id="error-task-deadline"></span>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label" for="select-task-priority">
+                                    <i data-lucide="flag" aria-hidden="true"></i> Prioridade
+                                </label>
+                                <select id="select-task-priority" name="priority" class="select">
+                                    <option value="low">Baixa</option>
+                                    <option value="medium" selected>Média</option>
+                                    <option value="high">Alta</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form__row">
+                            <div class="form__group">
+                                <label class="form__label" for="select-task-project">
+                                    <i data-lucide="folder" aria-hidden="true"></i> Projeto
+                                </label>
+                                <select id="select-task-project" name="project" class="select">
+                                    <option value="">Nenhum (tarefa independente)</option>
+                                    <!-- Populado pelo JS -->
+                                </select>
+                            </div>
+
+                            <div class="form__group">
+                                <span class="form__label" id="label-task-tags">
+                                    <i data-lucide="tag" aria-hidden="true"></i> Tags
+                                </span>
+                                <div class="tags-select" id="task-tags-select">
+                                    <!-- Checkboxes populados pelo JS -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form__group">
+                            <label class="form__check">
+                                <input type="checkbox" id="input-task-favorite" name="favorite" class="form__check-input">
+                                <span class="form__check-label">
+                                    <i data-lucide="star" aria-hidden="true"></i>
+                                    Marcar como favorita
+                                </span>
+                            </label>
+                        </div>
+
+                    </form>
+                </div>
+
+                <footer class="modal__footer">
+                    <button type="button" class="btn btn--ghost" id="modal-task-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn--primary" form="form-task" id="btn-submit-task">
+                        Criar Tarefa
+                    </button>
+                </footer>
+
+            </div>
+        </dialog>
+        <!-- /modal-task -->
+
+
+        <!-- ── Modal: Novo / Editar Projeto ── -->
+        <dialog class="modal" id="modal-project">
+            <div class="modal__container">
+
+                <header class="modal__header">
+                    <h2 class="modal__title" id="modal-project-heading">Novo Projeto</h2>
+                    <button class="modal__close" id="modal-project-close" aria-label="Fechar">
+                        <i data-lucide="x" aria-hidden="true"></i>
+                    </button>
+                </header>
+
+                <div class="modal__body">
+                    <form class="form" id="form-project" novalidate>
+
+                        <input type="hidden" id="input-project-id" name="project-id">
+
+                        <div class="form__group">
+                            <label class="form__label" for="input-project-name">
+                                Nome <span class="form__required" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" id="input-project-name" name="name" class="form__input" placeholder="Ex: Lançamento do Produto X" required minlength="3">
+                            <span class="form__error" id="error-project-name"></span>
+                        </div>
+
+                        <div class="form__group">
+                            <label class="form__label" for="input-project-description">Descrição</label>
+                            <textarea id="input-project-description" name="description" class="form__textarea" rows="3" placeholder="Descreva o objetivo do projeto..."></textarea>
+                        </div>
+
+                        <div class="form__row">
+                            <div class="form__group">
+                                <label class="form__label" for="input-project-deadline">
+                                    <i data-lucide="calendar" aria-hidden="true"></i> Prazo
+                                </label>
+                                <input type="date" id="input-project-deadline" name="deadline" class="form__input">
+                                <span class="form__error" id="error-project-deadline" aria-live="polite"></span>
+                            </div>
+
+                            <div class="form__group">
+                                <label class="form__label" for="select-project-status">
+                                    <i data-lucide="activity" aria-hidden="true"></i> Status
+                                </label>
+                                <select id="select-project-status" name="status" class="select">
+                                    <option value="active" selected>Ativo</option>
+                                    <option value="planning">Planejamento</option>
+                                    <option value="paused">Pausado</option>
+                                    <option value="completed">Concluído</option>
+                                    <option value="cancelled">Cancelado</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form__group">
+                            <span class="form__label" id="label-project-tags">
+                                <i data-lucide="tag" aria-hidden="true"></i> Tags
+                            </span>
+                            <div class="tags-select" id="project-tags-select">
+                                <!-- Populado pelo JS -->
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <footer class="modal__footer">
+                    <button type="button" class="btn btn--ghost" id="modal-project-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn--primary" form="form-project" id="btn-submit-project">
+                        Criar Projeto
+                    </button>
+                </footer>
+
+            </div>
+        </dialog>
+        <!-- /modal-project -->
+
+
+        <!-- ── Modal: Nova / Editar Tag ── -->
+        <dialog class="modal modal--sm" id="modal-tag">
+            <div class="modal__container">
+
+                <header class="modal__header">
+                    <h2 class="modal__title" id="modal-tag-heading">Nova Tag</h2>
+                    <button class="modal__close" id="modal-tag-close" aria-label="Fechar">
+                        <i data-lucide="x" aria-hidden="true"></i>
+                    </button>
+                </header>
+
+                <div class="modal__body">
+                    <form class="form" id="form-tag" novalidate>
+
+                        <input type="hidden" id="input-tag-id" name="tag-id">
+                        <input type="hidden" id="input-tag-color" name="color" value="#667eea">
+
+                        <div class="form__group">
+                            <label class="form__label" for="input-tag-name">
+                                Nome <span class="form__required" aria-hidden="true">*</span>
+                            </label>
+                            <input type="text" id="input-tag-name" name="name" class="form__input" placeholder="Ex: Trabalho" required>
+                            <span class="form__error" id="error-tag-name"></span>
+                        </div>
+
+                        <div class="form__group">
+                            <span class="form__label" id="label-tag-color">Cor</span>
+                            <div class="color-picker" id="color-picker">
+                                <!-- Opções de cor geradas pelo JS -->
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+                <footer class="modal__footer">
+                    <button type="button" class="btn btn--ghost" id="modal-tag-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn--primary" form="form-tag" id="btn-submit-tag">
+                        Criar Tag
+                    </button>
+                </footer>
+
+            </div>
+        </dialog>
+        <!-- /modal-tag -->
+
+
+        <!-- ── Modal: Confirmar Exclusão ── -->
+        <dialog class="modal modal--sm" id="modal-confirm">
+            <div class="modal__container">
+
+                <header class="modal__header modal__header--danger">
+                    <div class="modal__header-icon" aria-hidden="true">
+                        <i data-lucide="triangle-alert"></i>
+                    </div>
+                    <h2 class="modal__title" id="modal-confirm-heading">Confirmar exclusão</h2>
+                </header>
+
+                <div class="modal__body">
+                    <p class="modal__confirm-body" id="modal-confirm-body">
+                        Tem certeza que deseja excluir este item?
+                        Esta ação não pode ser desfeita.
+                    </p>
+                </div>
+
+                <footer class="modal__footer">
+                    <button type="button" class="btn btn--ghost" id="btn-confirm-cancel">Cancelar</button>
+                    <button type="button" class="btn btn--danger" id="btn-confirm-delete">
+                        <i data-lucide="trash-2" aria-hidden="true"></i>
+                        Excluir
+                    </button>
+                </footer>
+
+            </div>
+        </dialog>
+        <!-- /modal-confirm -->
+
+        <div class="toast-stack" id="toast-stack" role="region" aria-label="Notificações do sistema"></div>
 
     </div>
-
 
     <!-- SCRIPTS -->
     <script src="js/utils.js"></script>
