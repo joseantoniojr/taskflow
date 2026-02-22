@@ -1,0 +1,158 @@
+/* ════════════════════════════════════════════════
+   DASHBOARD
+   ════════════════════════════════════════════════ */
+#stat-grid.grid--4 > .stat-card:nth-last-child(-n+2) {
+    grid-column: span 2;
+}
+
+@media (max-width: 1024px) {
+    #stat-grid.grid--4 > .stat-card:nth-last-child(-n+2) {
+        grid-column: span 1;
+    }
+}
+
+
+/* ════════════════════════════════════════════════
+   TAREFAS
+   ════════════════════════════════════════════════ */
+
+/* Linha de tarefa concluída — injetado pelo JS */
+#task-list .data-table__row--completed .data-table__name {
+    text-decoration: line-through;
+    color: var(--text-muted);
+}
+
+#task-list .data-table__row--completed {
+    opacity: 0.65;
+}
+
+/* Linha de tarefa atrasada — destaque vermelho suave */
+#task-list .data-table__row--overdue,
+#dashboard-task-list .data-table__row--overdue {
+    background-color: rgba(var(--rgb-danger), 0.04);
+}
+
+#task-list .data-table__row--overdue .data-table__deadline-cell,
+#dashboard-task-list .data-table__row--overdue .data-table__deadline-cell {
+    color: var(--color-danger);
+}
+
+#task-list .data-table__row--overdue .data-table__deadline-cell svg,
+#dashboard-task-list .data-table__row--overdue .data-table__deadline-cell svg {
+    color: var(--color-danger);
+}
+
+/* ════════════════════════════════════════════════
+   PROJETOS
+   ════════════════════════════════════════════════ */
+.project-card--completed {
+    opacity: 0.75;
+}
+
+.project-card--completed .project-card__title {
+    color: var(--text-secondary);
+}
+
+/* Card de projeto cancelado */
+.project-card--cancelled {
+    opacity: 0.55;
+    border-style: dashed;
+}
+
+/* Card de projeto pausado */
+.project-card--paused .project-card__progress-value {
+    color: var(--text-muted);
+}
+
+.project-card--paused .progress-bar__fill {
+    background: linear-gradient(135deg, var(--color-gray-400), var(--color-gray-500));
+}
+
+/* Linha de projeto concluído na tabela */
+#project-list .data-table__row--completed .data-table__name {
+    color: var(--text-muted);
+}
+
+#project-list .data-table__row--completed {
+    opacity: 0.65;
+}
+
+
+/* ════════════════════════════════════════════════
+   TAGS
+   ════════════════════════════════════════════════ */
+#tag-list .data-table__td--usage .progress-bar {
+    height: 8px;
+}
+
+#tag-list .data-table__name {
+    font-weight: var(--font-weight-semibold);
+}
+
+
+/* ════════════════════════════════════════════════
+   BUSCA GLOBAL
+   ════════════════════════════════════════════════ */
+.search-results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.search-section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.search-section__title {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* ════════════════════════════════════════════════
+   EMPTY STATES
+   ════════════════════════════════════════════════ */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    padding: var(--space-12) var(--space-6);
+    text-align: center;
+}
+
+.empty-state__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 6.4rem;
+    height: 6.4rem;
+    border-radius: var(--radius-2xl);
+    background-color: rgba(var(--rgb-primary), 0.08);
+    color: var(--color-primary);
+}
+
+.empty-state__icon svg {
+    width: 2.8rem;
+    height: 2.8rem;
+}
+
+.empty-state__title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.empty-state__text {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    max-width: 32rem;
+    line-height: var(--line-height-relaxed);
+}
