@@ -26,3 +26,11 @@ function getTags() {
 function saveTags(tags) {
 	localStorage.setItem(nameTags, JSON.stringify(tags));
 }
+
+function getTheme() {
+	return localStorage.getItem(theme);
+}
+
+function saveTheme(selectedTheme) {
+	localStorage.setItem(theme, selectedTheme);
+}
