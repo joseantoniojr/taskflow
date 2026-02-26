@@ -15,7 +15,7 @@
     grid-area: header;
     position: sticky;
     top: 0;
-    z-index: var(--z-sidebar);
+    z-index: calc(var(--z-sidebar) - 2);
     display: flex;
     align-items: center;
     gap: var(--space-4);
