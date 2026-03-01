@@ -1,4 +1,4 @@
-function renderProjects() {
+function renderProjects(filtro = "all", ordenarPor = "newest") {
 	const projects = getProjects();
 	const projectGrid = document.querySelector("#project-grid");
 	const projectList = document.querySelector("#project-list");
@@ -6,7 +6,25 @@ function renderProjects() {
 	projectGrid.innerHTML = "";
 	projectList.innerHTML = "";
 
-	if (projects.length === 0) {
+	const filtros = {
+		all: () => true,
+		active: (project) => project.status === "ativo",
+		completed: (project) => project.status === "concluido",
+		overdue: (project) => isOverdue(project.prazo) && project.status !== "concluido",
+	};
+
+	const ordenacoes = {
+		newest: (a, b) => b.criadaEm - a.criadaEm,
+		oldest: (a, b) => a.criadaEm - b.criadaEm,
+		progress: (a, b) => calculeProgress(b.id) - calculeProgress(a.id),
+		deadline: (a, b) => new Date(a.prazo) - new Date(b.prazo),
+		alpha: (a, b) => a.nome.localeCompare(b.nome),
+	};
+
+	const projectsFiltradas = projects.filter(filtros[filtro] || filtros.all);
+	projectsFiltradas.sort(ordenacoes[ordenarPor] || ordenacoes.newest);
+
+	if (projectsFiltradas.length === 0) {
 		projectList.innerHTML = `
         <tr>
             <td colspan="5">
@@ -31,7 +49,7 @@ function renderProjects() {
 		cancelado: ["badge--cancelled", "Cancelado"],
 	};
 
-	projects.forEach((project) => {
+	projectsFiltradas.forEach((project) => {
 		const article = document.createElement("article");
 		article.className = "project-card";
 		article.dataset.projectId = project.id;

@@ -1,5 +1,9 @@
 let pendingDeleteId;
 let pendingDeleteType;
+let taskFiltro = "all";
+let taskOrdenacao = "newest";
+let projectFiltro = "all";
+let projectOrdenacao = "newest";
 
 document.addEventListener("DOMContentLoaded", () => {
 	const media = window.matchMedia("(width < 768px)");
@@ -20,6 +24,8 @@ function init() {
 	configModais();
 	configForm();
 	configAction();
+	configFilters();
+	configOrdination();
 
 	lucide.createIcons();
 }
@@ -194,6 +200,60 @@ function configAction() {
 			pendingDeleteType = "tag";
 			openModal("modal-confirm");
 		}
+	});
+}
+
+function configFilters() {
+	const dashboardFilters = document.querySelector("#dashboard-filters");
+	const taskFilters = document.querySelector("#task-filters");
+	const projectFilters = document.querySelector("#project-filters");
+
+	dashboardFilters.addEventListener("click", (e) => {
+		const btn = e.target.closest(".btn--filter");
+		if (!btn) return;
+		dashboardFilters.querySelectorAll(".btn--filter").forEach((b) => b.classList.remove("btn--filter-active"));
+		btn.classList.add("btn--filter-active");
+		taskFiltro = btn.dataset.filter;
+		renderTasks(taskFiltro, taskOrdenacao);
+	});
+
+	taskFilters.addEventListener("click", (e) => {
+		const btn = e.target.closest(".btn--filter");
+		if (!btn) return;
+		taskFilters.querySelectorAll(".btn--filter").forEach((b) => b.classList.remove("btn--filter-active"));
+		btn.classList.add("btn--filter-active");
+		taskFiltro = btn.dataset.filter;
+		renderTasks(taskFiltro, taskOrdenacao);
+	});
+
+	projectFilters.addEventListener("click", (e) => {
+		const btn = e.target.closest(".btn--filter");
+		if (!btn) return;
+		projectFilters.querySelectorAll(".btn--filter").forEach((b) => b.classList.remove("btn--filter-active"));
+		btn.classList.add("btn--filter-active");
+		projectFiltro = btn.dataset.filter;
+		renderProjects(projectFiltro, projectOrdenacao);
+	});
+}
+
+function configOrdination() {
+	const dashboardSort = document.querySelector("#select-dashboard-sort");
+	const taskSort = document.querySelector("#select-task-sort");
+	const projectSort = document.querySelector("#select-project-sort");
+
+	dashboardSort.addEventListener("change", (e) => {
+		taskOrdenacao = e.target.value;
+		renderTasks(taskFiltro, taskOrdenacao);
+	});
+
+	taskSort.addEventListener("change", (e) => {
+		taskOrdenacao = e.target.value;
+		renderTasks(taskFiltro, taskOrdenacao);
+	});
+
+	projectSort.addEventListener("change", (e) => {
+		projectOrdenacao = e.target.value;
+		renderProjects(projectFiltro, projectOrdenacao);
 	});
 }
 

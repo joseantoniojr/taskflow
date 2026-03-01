@@ -1,4 +1,4 @@
-function renderTasks() {
+function renderTasks(filtro = "all", ordenarPor = "newest") {
 	const tasks = getTasks();
 	const projects = getProjects();
 	const tags = getTags();
@@ -9,7 +9,31 @@ function renderTasks() {
 	dashboardList.innerHTML = "";
 	taskList.innerHTML = "";
 
-	if (tasks.length === 0) {
+	const filtros = {
+		all: () => true,
+		active: (task) => !task.concluida,
+		completed: (task) => task.concluida,
+		overdue: (task) => isOverdue(task.prazo) && !task.concluida,
+	};
+
+	const prioridadesPeso = {
+		high: 3,
+		medium: 2,
+		low: 1,
+	};
+
+	const ordenacoes = {
+		newest: (a, b) => b.criadaEm - a.criadaEm,
+		oldest: (a, b) => a.criadaEm - b.criadaEm,
+		priority: (a, b) => prioridadesPeso[b.prioridade] - prioridadesPeso[a.prioridade],
+		deadline: (a, b) => new Date(a.prazo) - new Date(b.prazo),
+		alpha: (a, b) => a.titulo.localeCompare(b.titulo),
+	};
+
+	const tasksFiltradas = tasks.filter(filtros[filtro] || filtros.all);
+	tasksFiltradas.sort(ordenacoes[ordenarPor] || ordenacoes.newest);
+
+	if (tasksFiltradas.length === 0) {
 		dashboardList.innerHTML = `
             <tr>
                 <td colspan="6">
@@ -46,7 +70,7 @@ function renderTasks() {
 			low: ["badge--low", "Baixa"],
 		};
 
-		tasks.forEach((task, index) => {
+		tasksFiltradas.forEach((task, index) => {
 			const project = projects.find((project) => project.id === task.projetoId);
 			const nameProjects = project ? project.nome : "";
 			const prioridade = prioridades[task.prioridade] || ["", ""];
