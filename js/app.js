@@ -134,6 +134,12 @@ function configAction() {
 
 	[taskList, dashboardList].forEach((container) => {
 		container.addEventListener("click", (e) => {
+			if (e.target.type === "checkbox" && e.target.name === "task") {
+				const tr = e.target.closest("tr");
+				toggleComplete(tr.dataset.taskId);
+				return;
+			}
+
 			const btn = e.target.closest("[data-action]");
 			if (!btn) return;
 
@@ -151,11 +157,6 @@ function configAction() {
 			}
 
 			if (action === "favorite") toggleFavorite(id);
-
-			if (e.target.type === "checkbox" && e.target.name === "task") {
-				const tr = e.target.closest("tr");
-				toggleComplete(tr.dataset.taskId);
-			}
 		});
 	});
 
@@ -348,7 +349,7 @@ function openModalProject(id = null) {
 		document.querySelector("#input-project-name").value = project.nome;
 		document.querySelector("#input-project-description").value = project.descricao;
 		document.querySelector("#input-project-deadline").value = project.prazo;
-		document.querySelector("#input-project-status").value = project.status;
+		document.querySelector("#select-project-status").value = project.status;
 
 		populateTagsSelect(project.tags);
 		openModal("modal-project");
