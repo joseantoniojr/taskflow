@@ -73,12 +73,12 @@ function renderTasks() {
 			trow.innerHTML = `
                 <td class="data-table__td data-table__td--check">
                     <label for="check-task-${task.id}" class="sr-only">${task.titulo}</label>
-                    <input type="checkbox" id="check-task-${task.id}" name="task">
+                    <input type="checkbox" id="check-task-${task.id}" name="task" ${task.concluida ? "checked" : ""}>
                 </td>
                 <td class="data-table__td data-table__td--name">
                     <div class="data-table__name-cell">
                         <span class="data-table__name">${task.titulo}</span>
-                        <button class="btn-favorite btn-favorite--active" data-action="favorite" aria-label="Remover dos favoritos">
+                        <button class="btn-favorite ${task.favorita ? "btn-favorite--active" : ""}" data-action="favorite" aria-label="Remover dos favoritos">
                             <i data-lucide="star" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -92,7 +92,7 @@ function renderTasks() {
                 </td>
                 <td class="data-table__td data-table__td--tag">
                     <ul class="tag-list" aria-label="Tags da tarefa">
-                        ${tagsHtml}
+                        ${tagsHtml ? tagsHtml : "-"}
                     </ul>
                 </td>
                 <td class="data-table__td data-table__td--priority">
