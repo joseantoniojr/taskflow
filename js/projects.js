@@ -32,7 +32,6 @@ function renderProjects() {
 	};
 
 	projects.forEach((project) => {
-		const progress = calculeProgress(project.id);
 		const article = document.createElement("article");
 		article.className = "project-card";
 		article.dataset.projectId = project.id;
@@ -58,10 +57,10 @@ function renderProjects() {
                 <div class="project-card__progress">
                     <div class="project-card__progress-info">
                         <span class="project-card__progress-label">Progresso</span>
-                        <span class="project-card__progress-value">${progress}%</span>
+                        <span class="project-card__progress-value">${calculeProgress(project.id)}%</span>
                     </div>
-                    <div class="progress-bar" role="progressbar" aria-label="${progress}% concluído">
-                        <div class="progress-bar__fill" style="width: ${progress}%;"></div>
+                    <div class="progress-bar" role="progressbar" aria-label="${calculeProgress(project.id)}% concluído">
+                        <div class="progress-bar__fill" style="width: ${calculeProgress(project.id)}%;"></div>
                     </div>
                 </div>
             </div>
