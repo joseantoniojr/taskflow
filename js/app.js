@@ -98,19 +98,84 @@ function configHamburger() {
 }
 
 function search(termo) {
+	const searchResults = document.querySelector("#search-results");
 	termo = termo.trim().toLowerCase();
 
 	if (termo === "") {
+		searchResults.style.display = "none";
 		renderTasks();
 		renderProjects();
 		return;
 	}
 
+	searchResults.style.display = "flex";
+
 	const tasks = getTasks().filter((task) => task.titulo.toLowerCase().includes(termo));
 	const projects = getProjects().filter((project) => project.nome.toLowerCase().includes(termo));
 
-	console.log(tasks);
-	console.log(projects);
+	renderSearchResults(tasks, projects);
+}
+
+function renderSearchResults(tasks, projects) {
+	const searchTaskList = document.querySelector("#search-task-list");
+	const searchProjectList = document.querySelector("#search-project-list");
+
+	searchTaskList.innerHTML = "";
+	searchProjectList.innerHTML = "";
+
+	if (tasks.length === 0) {
+		searchTaskList.innerHTML = `
+			<li class="search-results__list-item">
+				<h4 class="search-results__list-title">Nenhuma tarefa encontrada</h4>
+			</li>
+		`;
+	} else {
+		const prioridades = {
+			high: ["badge--high", "Alta"],
+			medium: ["badge--medium", "Média"],
+			low: ["badge--low", "Baixa"],
+		};
+
+		tasks.forEach((task) => {
+			const li = document.createElement("li");
+			const prioridade = prioridades[task.prioridade] || ["", ""];
+			li.className = "search-results__list-item";
+			li.innerHTML = `
+				<span class="search-results__list-title">${task.titulo}</span>
+				<span class="badge ${prioridade[0]}">${prioridade[1]}</span>
+			`;
+			searchTaskList.appendChild(li);
+
+			console.log(task);
+		});
+	}
+
+	if (projects.length === 0) {
+		searchProjectList.innerHTML = `
+			<li class="search-results__list-item">
+				<h4 class="search-results__list-title">Nenhum projeto encontrado</h4>
+			</li>
+		`;
+	} else {
+		const status = {
+			ativo: ["badge--in-progress", "Em Andamento"],
+			concluido: ["badge--completed", "Concluído"],
+			planejando: ["badge--planning", "Planejamento"],
+			pausado: ["badge--paused", "Pausado"],
+			cancelado: ["badge--cancelled", "Cancelado"],
+		};
+
+		projects.forEach((project) => {
+			const li = document.createElement("li");
+			li.className = "search-results__list-item";
+			li.innerHTML = `
+				<span class="search-results__list-title">${project.nome}</span>
+				<span class="badge ${status[project.status][0]}">${status[project.status][1]}</span>
+			
+		`;
+			searchProjectList.appendChild(li);
+		});
+	}
 }
 
 function renderStats() {
