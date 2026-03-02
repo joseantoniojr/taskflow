@@ -16,6 +16,7 @@ function init() {
 	renderTasks();
 	renderProjects();
 	renderTags();
+	renderStats();
 
 	configNavigation();
 	configHamburger();
@@ -110,6 +111,91 @@ function search(termo) {
 
 	console.log(tasks);
 	console.log(projects);
+}
+
+function renderStats() {
+	const statsTasks = tasksStats();
+	const statsProjects = projectsStats();
+	const total = document.querySelector("#stats-total");
+	const active = document.querySelector("#stats-active");
+	const today = document.querySelector("#stats-today");
+	const completed = document.querySelector("#stats-completed");
+	const overdue = document.querySelector("#stats-overdue");
+	const projects = document.querySelector("#stats-projects");
+	const progressBarFill = document.querySelector("#progress-bar-fill");
+
+	const listaOverdue = statsTasks.listOverdue.slice(0, 2);
+	const listaProjects = statsProjects.listProjects.slice(0, 2);
+
+	overdue.innerHTML = "";
+	projects.innerHTML = "";
+
+	if (listaOverdue.length > 0) {
+		listaOverdue.forEach((task) => {
+			const div = document.createElement("div");
+			div.className = "stat-card__row";
+			div.innerHTML = `
+				<div class="stat-card__row-header">	
+					<span class="stat-card__row-title">${task.titulo}</span>
+					<span class="stat-card__row-info badge badge--high">${daysOverdue(task.prazo)} ${daysOverdue(task.prazo) === 1 ? "dia" : "dias"} de atraso</span>
+				</div>
+			`;
+
+			overdue.appendChild(div);
+		});
+	} else {
+		overdue.innerHTML = `
+			<div class="stat-card__row">
+				<span class="stat-card__row-title">Nenhuma tarefa atrasada</span>
+				<span class="stat-card__row-info">
+					<i data-lucide="check-circle"></i>
+				</span>	
+			</div>
+		`;
+	}
+
+	if (listaProjects.length > 0) {
+		listaProjects.forEach((project) => {
+			const div = document.createElement("div");
+			div.className = "stat-card__row";
+			const progress = calculeProgress(project.id);
+			div.innerHTML = `
+				<div class="stat-card__row-header">	
+					<span class="stat-card__row-title">${project.nome}</span>
+					<span class="stat-card__row-info">${progress}%</span>
+				</div>
+				<div class="progress-bar" role="progressbar" aria-label="${project.nome}: ${progress}% concluído">
+					<div class="progress-bar__fill" style="width: ${progress}%;"></div>
+				</div>
+			`;
+
+			projects.appendChild(div);
+		});
+	} else {
+		projects.innerHTML = `
+			<div class="stat-card__row">
+				<span class="stat-card__row-title">Nenhum projeto cadastrado</span>	
+				<span class="stat-card__row-info">
+					<i data-lucide="check-circle"></i>
+				</span>
+			</div>
+		`;
+	}
+
+	if (statsTasks.total === 0) {
+		total.textContent = 0;
+		active.textContent = 0;
+		today.textContent = 0;
+		completed.textContent = "0%";
+		progressBarFill.style.width = "0%";
+		return;
+	}
+
+	total.textContent = statsTasks.total;
+	active.textContent = statsTasks.active;
+	today.textContent = statsTasks.today;
+	completed.textContent = statsTasks.percent + "%";
+	progressBarFill.style.width = statsTasks.percent + "%";
 }
 
 function configSearch() {

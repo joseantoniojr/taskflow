@@ -139,6 +139,7 @@ function renderTasks(filtro = "all", ordenarPor = "newest") {
 
 		lucide.createIcons();
 	}
+	renderStats();
 }
 
 function createTask(dados) {
@@ -204,6 +205,19 @@ function deleteTask(id) {
 	saveTasks(newTasks);
 	renderTasks();
 	showToast("Tarefas removida!", "success");
+}
+
+function tasksStats() {
+	const tasks = getTasks();
+	const total = tasks.length;
+	const active = tasks.filter((task) => !task.concluida).length;
+	const completed = tasks.filter((task) => task.concluida).length;
+	const today = tasks.filter((task) => new Date(task.criadaEm).toDateString() === new Date().toDateString()).length;
+	const overdue = tasks.filter((task) => isOverdue(task.prazo) && !task.concluida);
+	const listOverdue = overdue.sort((a, b) => daysOverdue(b.prazo) - daysOverdue(a.prazo));
+	const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+	return { total, active, today, listOverdue, percent };
 }
 
 function toggleComplete(id) {

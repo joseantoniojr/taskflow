@@ -132,6 +132,7 @@ function renderProjects(filtro = "all", ordenarPor = "newest") {
 	});
 
 	lucide.createIcons();
+	renderStats();
 }
 
 function createProject(dados) {
@@ -202,6 +203,19 @@ function deleteProject(id) {
 	saveTasks(newTasks);
 	renderProjects();
 	showToast("Projeto e tarefas desvinculadas", "success");
+}
+
+function completedTasksCount(projectId) {
+	const tasks = getTasks();
+	return tasks.filter((task) => task.projetoId === projectId && task.concluida).length;
+}
+
+function projectsStats() {
+	const projects = getProjects();
+
+	let listProjects = [...projects].sort((a, b) => completedTasksCount(b.id) - completedTasksCount(a.id));
+
+	return { listProjects };
 }
 
 function calculeProgress(projectId) {
