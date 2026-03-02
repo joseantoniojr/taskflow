@@ -451,7 +451,7 @@
     flex-wrap: wrap;
     margin-top: var(--space-6);
     margin-bottom: var(--space-4);
-    background-color: var(--color-white);
+    background-color: var(--bg-surface);
     border-radius: var(--radius-xl);
     padding: var(--space-4);
     border: 1px solid var(--border-color);
@@ -483,7 +483,7 @@
 
 /* Cabeçalho */
 .data-table__head {
-    background-color: var(--color-white);
+    background-color: var(--bg-surface);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -631,7 +631,7 @@
     justify-content: space-between;
     padding: var(--space-3) var(--space-4);
     border-top: 1px solid var(--border-color);
-    background-color: var(--color-white);
+    background-color: var(--bg-surface);
 }
 
 .table-footer__info {
