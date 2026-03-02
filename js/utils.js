@@ -17,6 +17,14 @@ function isOverdue(dateString) {
 	return dateString < today;
 }
 
+function daysOverdue(dateString) {
+	if (!dateString) return 0;
+	let today = new Date();
+	let dueDate = new Date(dateString);
+	let diffTime = today - dueDate;
+	return Math.floor(diffTime / (1000 * 60 * 60 * 24));
+}
+
 function showToast(message, type) {
 	const stack = document.querySelector("#toast-stack");
 
