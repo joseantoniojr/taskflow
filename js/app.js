@@ -288,9 +288,34 @@ function configAction() {
 	const taskList = document.querySelector("#task-list");
 	const projectList = document.querySelector("#project-list");
 	const tagList = document.querySelector("#tag-list");
+	const checkAllDash = document.querySelector("#check-dashboard-all");
+	const checkAllTask = document.querySelector("#check-tasks-all");
+
+	[checkAllTask, checkAllDash].forEach((checkbox) => {
+		checkbox.addEventListener("change", (e) => {
+			const checked = e.target.checked;
+			const taskCheckboxes = dashboardList.querySelectorAll("input[type='checkbox'][name='task']");
+
+			[taskCheckboxes].forEach((checkboxes) => {
+				checkboxes.forEach((checkbox) => {
+					if (checked) {
+						if (!checkbox.checked) {
+							checkbox.checked = true;
+							toggleComplete(checkbox.closest("tr").dataset.taskId);
+						}
+					} else {
+						if (checkbox.checked) {
+							checkbox.checked = false;
+							toggleComplete(checkbox.closest("tr").dataset.taskId);
+						}
+					}
+				});
+			});
+		});
+	});
 
 	[taskList, dashboardList].forEach((container) => {
-		container.addEventListener("click", (e) => {
+		container.addEventListener("change", (e) => {
 			if (e.target.type === "checkbox" && e.target.name === "task") {
 				const tr = e.target.closest("tr");
 				toggleComplete(tr.dataset.taskId);

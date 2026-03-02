@@ -235,7 +235,9 @@ function toggleComplete(id) {
 	tasks[indice].atualizadaEm = Date.now();
 
 	saveTasks(tasks);
-	renderTasks();
+	renderTasks(taskFiltro, taskOrdenacao);
+	renderProjects(projectFiltro, projectOrdenacao);
+	renderStats();
 }
 
 function toggleFavorite(id) {
