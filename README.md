@@ -2,7 +2,7 @@
 
 ### Sistema de Gerenciamento de Tarefas e Projetos
 
-![Em Desenvolvimento](https://img.shields.io/badge/Status-Em%20Desenvolvimento-yellow)
+![Concluído](https://img.shields.io/badge/Status-Concluído-brightgreen)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
 
 ---
@@ -132,15 +132,19 @@ cd taskflow
 
 ### Dashboard
 
-**(Em Breve)**
+![Dashboard](assets/dashboard-light-mode.png)
+![Dashboard-dark-mode](assets/dashboard-dark-mode.png)
+![Modal](assets/modal-nova-tarefa.png)
 
 ### Tarefas e Projetos
 
-**(Em Breve)**
+![Tarefas](assets/tarefas.png)
+![Projetos](assets/projetos.png)
+![Tags](assets/tags.png)
 
 ### Mobile
 
-**(Em Breve)**
+![Mobile](assets/dashboard-mobile.png)
 
 ---
 
