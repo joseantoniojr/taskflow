@@ -72,7 +72,6 @@ function renderTasks(filtro = "all", ordenarPor = "newest") {
 
 		tasksFiltradas.forEach((task, index) => {
 			const project = projects.find((project) => project.id === task.projetoId);
-			const nameProjects = project ? project.nome : "";
 			const prioridade = prioridades[task.prioridade] || ["", ""];
 			const tagsHtml = task.tags
 				.map((id) => {
@@ -139,7 +138,6 @@ function renderTasks(filtro = "all", ordenarPor = "newest") {
 
 		lucide.createIcons();
 	}
-	renderStats();
 }
 
 function createTask(dados) {
@@ -167,7 +165,9 @@ function createTask(dados) {
 	tasks.push(task);
 	saveTasks(tasks);
 	renderTasks();
+	renderTags();
 	showToast("Tarefa criada com sucesso!", "success");
+	renderStats();
 }
 
 function editTask(id, dados) {
@@ -195,7 +195,9 @@ function editTask(id, dados) {
 
 	saveTasks(tasks);
 	renderTasks();
+	renderTags();
 	showToast("Tarefa Atualizada!", "success");
+	renderStats();
 }
 
 function deleteTask(id) {
@@ -204,7 +206,9 @@ function deleteTask(id) {
 
 	saveTasks(newTasks);
 	renderTasks();
+	renderTags();
 	showToast("Tarefas removida!", "success");
+	renderStats();
 }
 
 function tasksStats() {

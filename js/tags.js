@@ -6,8 +6,6 @@ function renderTags() {
 	tagList.innerHTML = "";
 	tagGrid.innerHTML = "";
 
-	let gridHtml = "";
-
 	if (tags.length === 0) {
 		tagList.innerHTML = `
         <tr>
@@ -16,14 +14,21 @@ function renderTags() {
                     <div class="empty-state__icon">
                         <i data-lucide="inbox"></i>
                     </div>
-                    <h3 class="empty-state__title">Nenhuma tarefa encontrada</h3>
-                    <p class="empty-state__text">Crie sua primeira tarefa clicando em Nova Tarefa.</p>
+                    <h3 class="empty-state__title">Nenhuma tag encontrada</h3>
+                    <p class="empty-state__text">Crie sua primeira tag clicando em Nova Tag.</p>
                 </div>
             </td>
         </tr>
         `;
 	} else {
+		const totalTasks = getTasks().length;
+		const totalProjects = getProjects().length;
+
 		tags.forEach((item) => {
+			const usoCount = getTasks().filter((task) => task.tags.includes(item.id)).length;
+			+getProjects().filter((project) => project.tags.includes(item.id)).length;
+			const usoPercent =
+				totalTasks + totalProjects > 0 ? Math.round((usoCount / (totalTasks + totalProjects)) * 100) : 0;
 			const tr = document.createElement("tr");
 			tr.classList.add("data-table__row");
 			tr.setAttribute("data-tag-id", item.id);
@@ -38,11 +43,11 @@ function renderTags() {
                     </div>
                 </td>
                 <td class="data-table__td data-table__td--count">
-                    <span>0</span>
+                    <span>${usoCount}</span>
                 </td>
                 <td class="data-table__td data-table__td--usage">
-                    <div class="progress-bar" role="progressbar" aria-label="62% de uso total">
-                        <div class="progress-bar__fill"></div>
+                    <div class="progress-bar" role="progressbar" aria-label="${usoPercent}% de uso total">
+                        <div class="progress-bar__fill" style="width: ${usoPercent}%"></div>
                     </div>
                 </td>
                 <td class="data-table__td data-table__td--actions">
@@ -64,12 +69,12 @@ function renderTags() {
 			article.innerHTML = `
                 <div class="tag-card__header">
                     <h2 class="tag-card__name">${item.nome}</h2>
-                    <span class="tag-card__icon" aria-hidden="true">
+                    <span class="tag-card__icon" aria-hidden="true" style="color: ${item.cor}">
                         <i data-lucide="heart-pulse"></i>
                     </span>
                 </div>
                 <div class="tag-card__body">
-                    <span class="tag-card__count">12 tarefas</span>
+                    <span class="tag-card__count">${usoCount} ${usoCount === 1 ? "tarefa" : "tarefas"}</span>
                 </div>
             `;
 			tagGrid.appendChild(article);
@@ -134,48 +139,74 @@ function deleteTag(id) {
 	showToast("Tag removida", "success");
 }
 
-function populateTagsSelect(selectedIds) {
-	const modalTask = document.querySelector("#task-tags-select");
-	const modalProject = document.querySelector("#project-tags-select");
+function renderColorPicker(corSelecionada) {
+	const colors = [
+		"#667eea",
+		"#f093fb",
+		"#4facfe",
+		"#43e97b",
+		"#fa709a",
+		"#fd7979",
+		"#ffecd2",
+		"#a18cd1",
+		"#fccb90",
+		"#84fab0",
+		"#30cfd0",
+		"#0ba360",
+	];
+
+	const container = document.querySelector("#color-picker");
+	const input = document.querySelector("#input-tag-color");
+	container.innerHTML = "";
+
+	colors.forEach((color) => {
+		const button = document.createElement("button");
+		button.type = "button";
+		button.classList.add("color-option");
+		button.style.backgroundColor = color;
+		button.setAttribute("aria-label", `Selecionar cor ${color}`);
+		button.setAttribute("data-color", color);
+
+		if (color === corSelecionada) {
+			button.classList.add("selected");
+		}
+
+		button.addEventListener("click", (e) => {
+			document.querySelectorAll(".color-option").forEach((btn) => btn.classList.remove("selected"));
+			button.classList.add("selected");
+			input.value = color;
+		});
+
+		container.appendChild(button);
+	});
+}
+
+function populateTagsSelect(selectedIds, containerId = "task-tags-select") {
+	const container = document.querySelector(`#${containerId}`);
 
 	const tags = getTags();
 
-	modalTask.innerHTML = "";
-	modalProject.innerHTML = "";
+	container.innerHTML = "";
 
 	if (tags.length === 0) {
-		modalTask.innerHTML = "<span>Nenhuma tag cadastrada</span>";
-		modalProject.innerHTML = "<span>Nenhuma tag cadastrada</span>";
+		container.innerHTML = "<span>Nenhuma tag cadastrada</span>";
 		return;
 	}
 
 	tags.forEach((tag) => {
-		const spanTask = document.createElement("span");
-		const spanProject = document.createElement("span");
-
-		spanTask.className = "tags-select__item";
-		spanProject.className = "tags-select__item";
-
-		spanTask.dataset.tagId = tag.id;
-		spanProject.dataset.tagId = tag.id;
-
-		spanTask.textContent = tag.nome;
-		spanProject.textContent = tag.nome;
+		const span = document.createElement("span");
+		span.className = "tags-select__item";
+		span.dataset.tagId = tag.id;
+		span.textContent = tag.nome;
 
 		if (selectedIds.includes(tag.id)) {
-			spanTask.classList.add("selected");
-			spanProject.classList.add("selected");
+			span.classList.add("selected");
 		}
 
-		spanTask.addEventListener("click", () => {
-			spanTask.classList.toggle("selected");
+		span.addEventListener("click", () => {
+			span.classList.toggle("selected");
 		});
 
-		spanProject.addEventListener("click", () => {
-			spanProject.classList.toggle("selected");
-		});
-
-		modalTask.appendChild(spanTask);
-		modalProject.appendChild(spanProject);
+		container.appendChild(span);
 	});
 }

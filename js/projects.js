@@ -132,7 +132,6 @@ function renderProjects(filtro = "all", ordenarPor = "newest") {
 	});
 
 	lucide.createIcons();
-	renderStats();
 }
 
 function createProject(dados) {
@@ -158,6 +157,7 @@ function createProject(dados) {
 	saveProjects(projects);
 	renderProjects();
 	showToast("Projeto criado com sucesso", "success");
+	renderStats();
 }
 
 function editProject(id, dados) {
@@ -184,6 +184,7 @@ function editProject(id, dados) {
 	saveProjects(projects);
 	renderProjects();
 	showToast("Projeto atualizado!", "success");
+	renderStats();
 }
 
 function deleteProject(id) {
@@ -203,6 +204,7 @@ function deleteProject(id) {
 	saveTasks(newTasks);
 	renderProjects();
 	showToast("Projeto e tarefas desvinculadas", "success");
+	renderStats();
 }
 
 function completedTasksCount(projectId) {

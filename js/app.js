@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
 function init() {
 	carregarTema();
 
-	renderTasks();
-	renderProjects();
+	renderTasks(taskFiltro, taskOrdenacao);
+	renderProjects(projectFiltro, projectOrdenacao);
 	renderTags();
 	renderStats();
 
@@ -102,13 +102,13 @@ function search(termo) {
 	termo = termo.trim().toLowerCase();
 
 	if (termo === "") {
-		searchResults.style.display = "none";
-		renderTasks();
-		renderProjects();
+		searchResults.hidden = true;
+		renderTasks(taskFiltro, taskOrdenacao);
+		renderProjects(projectFiltro, projectOrdenacao);
 		return;
 	}
 
-	searchResults.style.display = "flex";
+	searchResults.hidden = false;
 
 	const tasks = getTasks().filter((task) => task.titulo.toLowerCase().includes(termo));
 	const projects = getProjects().filter((project) => project.nome.toLowerCase().includes(termo));
@@ -145,8 +145,6 @@ function renderSearchResults(tasks, projects) {
 				<span class="badge ${prioridade[0]}">${prioridade[1]}</span>
 			`;
 			searchTaskList.appendChild(li);
-
-			console.log(task);
 		});
 	}
 
@@ -291,26 +289,37 @@ function configAction() {
 	const checkAllDash = document.querySelector("#check-dashboard-all");
 	const checkAllTask = document.querySelector("#check-tasks-all");
 
-	[checkAllTask, checkAllDash].forEach((checkbox) => {
-		checkbox.addEventListener("change", (e) => {
-			const checked = e.target.checked;
-			const taskCheckboxes = dashboardList.querySelectorAll("input[type='checkbox'][name='task']");
+	checkAllDash.addEventListener("change", (e) => {
+		const checked = e.target.checked;
+		const taskCheckboxes = dashboardList.querySelectorAll("input[type='checkbox'][name='task']");
 
-			[taskCheckboxes].forEach((checkboxes) => {
-				checkboxes.forEach((checkbox) => {
-					if (checked) {
-						if (!checkbox.checked) {
-							checkbox.checked = true;
-							toggleComplete(checkbox.closest("tr").dataset.taskId);
-						}
-					} else {
-						if (checkbox.checked) {
-							checkbox.checked = false;
-							toggleComplete(checkbox.closest("tr").dataset.taskId);
-						}
-					}
-				});
-			});
+		taskCheckboxes.forEach((checkbox) => {
+			if (checked) {
+				if (checked && !checkbox.checked) {
+					checkbox.checked = true;
+					toggleComplete(checkbox.closest("tr").dataset.taskId);
+				}
+			} else if (!checked && checkbox.checked) {
+				checkbox.checked = false;
+				toggleComplete(checkbox.closest("tr").dataset.taskId);
+			}
+		});
+	});
+
+	checkAllTask.addEventListener("change", (e) => {
+		const checked = e.target.checked;
+		const taskCheckboxes = taskList.querySelectorAll("input[type='checkbox'][name='task']");
+
+		taskCheckboxes.forEach((checkbox) => {
+			if (checked) {
+				if (checked && !checkbox.checked) {
+					checkbox.checked = true;
+					toggleComplete(checkbox.closest("tr").dataset.taskId);
+				}
+			} else if (!checked && checkbox.checked) {
+				checkbox.checked = false;
+				toggleComplete(checkbox.closest("tr").dataset.taskId);
+			}
 		});
 	});
 
@@ -321,7 +330,10 @@ function configAction() {
 				toggleComplete(tr.dataset.taskId);
 				return;
 			}
+		});
 
+		container.addEventListener("click", (e) => {
+			if (e.target.type === "checkbox") return;
 			const btn = e.target.closest("[data-action]");
 			if (!btn) return;
 
@@ -451,6 +463,7 @@ function configForm() {
 		e.preventDefault();
 
 		const id = document.querySelector("#input-task-id").value;
+		const taskAtual = id ? getTasks().find((t) => t.id === id) : null;
 
 		const dados = {
 			titulo: document.querySelector("#input-task-title").value.trim(),
@@ -460,6 +473,7 @@ function configForm() {
 			projetoId: document.querySelector("#select-task-project").value || null,
 			favorita: document.querySelector("#input-task-favorite").checked,
 			tags: readTagsSelected("task-tags-select"),
+			concluida: taskAtual ? taskAtual.concluida : false,
 		};
 
 		if (id) {
@@ -543,7 +557,7 @@ function openModalTask(id = null) {
 		modalTitle.textContent = "Nova Tarefa";
 		hiddenField.value = "";
 		document.querySelector("#form-task").reset();
-		populateTagsSelect([]);
+		populateTagsSelect([], "task-tags-select");
 		openModal("modal-task");
 	} else {
 		const task = getTasks().find((t) => t.id === id);
@@ -559,7 +573,7 @@ function openModalTask(id = null) {
 		document.querySelector("#select-task-project").value = task.projetoId;
 		document.querySelector("#input-task-favorite").checked = task.favorita;
 
-		populateTagsSelect(task.tags);
+		populateTagsSelect(task.tags ?? [], "task-tags-select");
 		openModal("modal-task");
 	}
 }
@@ -573,7 +587,7 @@ function openModalProject(id = null) {
 		modalTitle.textContent = "Novo Projeto";
 		hiddenField.value = "";
 		document.querySelector("#form-project").reset();
-		populateTagsSelect([]);
+		populateTagsSelect([], "project-tags-select");
 		openModal("modal-project");
 	} else {
 		const project = getProjects().find((p) => p.id === id);
@@ -587,21 +601,18 @@ function openModalProject(id = null) {
 		document.querySelector("#input-project-deadline").value = project.prazo;
 		document.querySelector("#select-project-status").value = project.status;
 
-		populateTagsSelect(project.tags);
+		populateTagsSelect(project.tags ?? [], "project-tags-select");
 		openModal("modal-project");
 	}
 }
 
 function openModalTag(id = null) {
 	const modalTitle = document.querySelector("#modal-tag-heading");
-	const hiddenField = document.querySelector("#input-tag-id");
-	const hiddenFieldColor = document.querySelector("#input-tag-color");
 
 	if (id === null) {
 		modalTitle.textContent = "Nova Tag";
-		hiddenField.value = "";
 		document.querySelector("#form-tag").reset();
-		hiddenFieldColor.value = "#667eea";
+		renderColorPicker("#667eea");
 		openModal("modal-tag");
 	} else {
 		const tag = getTags().find((t) => t.id === id);
@@ -609,9 +620,8 @@ function openModalTag(id = null) {
 		if (tag === undefined) return;
 
 		modalTitle.textContent = "Editar Tag";
-		hiddenField.value = id;
 		document.querySelector("#input-tag-name").value = tag.nome;
-		document.querySelector("#input-tag-color").value = tag.cor;
+		renderColorPicker(tag.cor);
 		openModal("modal-tag");
 	}
 }
